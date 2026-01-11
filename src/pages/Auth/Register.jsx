@@ -100,7 +100,13 @@ export default function Register() {
         </button>
 
         <p className="text-center text-sm text-gray-600">
-          Đã có tài khoản? <a href="/login" className="text-blue-600">Đăng nhập</a>
+          Đã có tài khoản? <button
+            type="button"
+            onClick={() => navigate("/login")}
+            className="text-blue-600 cursor-pointer underline"
+          >
+            Đăng nhập
+          </button>
         </p>
       </form>
     </div>

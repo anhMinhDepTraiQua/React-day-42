@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom"; // ✅ Sửa import này
+import { useNavigate } from "react-router-dom";
 import loginSchema from "../../schemas/loginSchema";
 import { useLoginMutation } from "../../services/auth";
 
@@ -16,7 +16,15 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      await login(data).unwrap();
+      const res = await login(data).unwrap();
+
+      const token = res.access_token;
+
+      const expireAt = Date.now() + 60 * 1000; // 1 phút
+
+      localStorage.setItem("access_token", token);
+      localStorage.setItem("expire_at", expireAt);
+
       navigate("/home");
     } catch (error) {
       const errorMessage = error?.data?.message || "Đăng nhập thất bại!";
